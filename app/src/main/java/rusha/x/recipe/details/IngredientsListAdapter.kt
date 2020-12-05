@@ -1,69 +1,10 @@
-package rusha.x
+package rusha.x.recipe.details
 
-import android.os.Bundle
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.fragment.findNavController
-import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.RecyclerView
-import kotlinx.android.synthetic.main.recipe_details_activity.*
-import kotlinx.android.synthetic.main.recipe_details_item.view.*
-import rusha.x.product.Product
+import rusha.x.R
 import rusha.x.recipe.Recipe
-
-class RecipeDetailsViewModel : BaseViewModel() {
-    val recipeNameLiveData = MutableLiveData<String>("")
-    val ingredientsLiveData = MutableLiveData<List<Recipe.Ingredient>>()
-    val goToProductDetails = SingleLiveEvent<Product>()
-
-    fun init(recipe: Recipe) {
-        recipeNameLiveData.value = recipe.name
-        ingredientsLiveData.value = recipe.ingredients
-    }
-
-    fun onIngredientClick(ingredient: Recipe.Ingredient) {
-        goToProductDetails.value = ingredient.product
-    }
-}
-
-class RecipeDetailsFragment : Fragment(R.layout.recipe_details_activity) {
-    private lateinit var viewModel: RecipeDetailsViewModel
-
-    private val args by navArgs<RecipeDetailsFragmentArgs>()
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        viewModel = ViewModelProvider(this).get(RecipeDetailsViewModel::class.java)
-        viewModel.init(recipe = args.recipe)
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-        viewModel.recipeNameLiveData.observe(viewLifecycleOwner, Observer { recipeName ->
-            nameView.text = recipeName
-        })
-
-        viewModel.ingredientsLiveData.observe(viewLifecycleOwner, Observer { ingredients ->
-            val ingredientsViewAdapter = IngredientsListAdapter(viewModel)
-            ingredientsViewAdapter.ingredientsToAdopt = ingredients
-            ingredientsView.adapter = ingredientsViewAdapter
-        })
-
-        viewModel.goToProductDetails.observe(viewLifecycleOwner, Observer { product ->
-            findNavController().navigate(
-                RecipeDetailsFragmentDirections.actionRecipeDetailsFragmentToProductDetailsFragment(
-                    product
-                )
-            )
-        })
-    }
-}
 
 /**
  * Преобразует список [ingredientsToAdopt] в отображение списка в [ingredientsView]
@@ -180,28 +121,5 @@ class IngredientsListAdapter(
      */
     override fun getItemCount(): Int {
         return ingredientsToAdopt.size
-    }
-}
-
-/**
- * Держатель отображения ячейки
- */
-class IngredientViewHolder(
-    val viewModel: RecipeDetailsViewModel,
-    /**
-     * Отображение ячейки (ConstraintLayout из recipe_details_item.xml)
-     */
-    val cellView: View
-) : RecyclerView.ViewHolder(cellView) {
-
-    /**
-     * Держатель ячейки заполняет отображение ячейки данными
-     */
-    fun bind(ingredient: Recipe.Ingredient) {
-        cellView.setOnClickListener {
-            viewModel.onIngredientClick(ingredient)
-        }
-        cellView.nameItemView.text = ingredient.product.name
-        cellView.countView.text = ingredient.countInRecipe.toString()
     }
 }

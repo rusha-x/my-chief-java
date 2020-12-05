@@ -1,4 +1,4 @@
-package rusha.x.recipe
+package rusha.x.recipe.list
 
 import androidx.lifecycle.MutableLiveData
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
@@ -8,6 +8,7 @@ import rusha.x.BaseViewModel
 import rusha.x.MainApi
 import rusha.x.SingleLiveEvent
 import rusha.x.di
+import rusha.x.recipe.Recipe
 
 class RecipeListViewModel : BaseViewModel() {
     private val api by di.instance<MainApi>()

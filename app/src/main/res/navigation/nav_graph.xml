@@ -5,7 +5,7 @@
     app:startDestination="@id/recipeListFragment">
     <fragment
         android:id="@+id/recipeListFragment"
-        android:name="rusha.x.recipe.RecipeListFragment"
+        android:name="rusha.x.recipe.list.RecipeListFragment"
         android:label="RecipeListFragment">
         <action
             android:id="@+id/action_recipeListFragment_to_editRecipeFragment"
@@ -28,7 +28,7 @@
     </fragment>
     <fragment
         android:id="@+id/recipeDetailsFragment"
-        android:name="rusha.x.RecipeDetailsFragment"
+        android:name="rusha.x.recipe.details.RecipeDetailsFragment"
         android:label="RecipeDetailsFragment">
         <argument
             android:name="recipe"

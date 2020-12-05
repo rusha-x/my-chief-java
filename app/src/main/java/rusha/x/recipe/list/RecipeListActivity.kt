@@ -1,20 +1,19 @@
-package rusha.x.recipe
+package rusha.x.recipe.list
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.recipe_list_activity.*
 import kotlinx.android.synthetic.main.recipe_list_item.view.*
-import org.kodein.di.instance
-import rusha.x.*
+import rusha.x.R
+import rusha.x.recipe.Recipe
+import rusha.x.recipe.RecipeListFragmentDirections
 
 class RecipeListFragment : Fragment(R.layout.recipe_list_activity) {
     private lateinit var viewModel: RecipeListViewModel
