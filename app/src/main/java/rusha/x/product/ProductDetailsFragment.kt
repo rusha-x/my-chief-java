@@ -1,35 +1,14 @@
-package rusha.x
+package rusha.x.product
 
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.navArgs
 import kotlinx.android.synthetic.main.product_details_fragment.*
-
-class ProductDetailsViewModel : ViewModel() {
-
-    val nameLiveData = MutableLiveData<String>("")
-    val formattedPriceLiveData = MutableLiveData<String>("")
-
-    data class ShowWelcomeParams(val text: String)
-
-    val showWelcomeLiveData = MutableLiveData<ShowWelcomeParams?>(null)
-
-    fun init (product: Product) {
-        nameLiveData.value = product.name
-        formattedPriceLiveData.value = "${product.price}/${product.unit}"
-    }
-
-    fun onResume() {
-        showWelcomeLiveData.value = ShowWelcomeParams(text = "Привет!")
-        showWelcomeLiveData.value = null
-    }
-}
+import rusha.x.R
 
 class ProductDetailsFragment : Fragment(R.layout.product_details_fragment) {
     private lateinit var viewModel: ProductDetailsViewModel

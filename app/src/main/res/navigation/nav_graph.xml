@@ -5,7 +5,7 @@
     app:startDestination="@id/recipeListFragment">
     <fragment
         android:id="@+id/recipeListFragment"
-        android:name="rusha.x.RecipeListFragment"
+        android:name="rusha.x.recipe.RecipeListFragment"
         android:label="RecipeListFragment">
         <action
             android:id="@+id/action_recipeListFragment_to_editRecipeFragment"
@@ -16,15 +16,15 @@
     </fragment>
     <fragment
         android:id="@+id/editRecipeFragment"
-        android:name="rusha.x.EditRecipeFragment"
+        android:name="rusha.x.recipe.createOrEdit.EditRecipeFragment"
         android:label="EditRecipeFragment" />
     <fragment
         android:id="@+id/productDetailsFragment"
-        android:name="rusha.x.ProductDetailsFragment"
+        android:name="rusha.x.product.ProductDetailsFragment"
         android:label="ProductDetailsFragment" >
         <argument
             android:name="product"
-            app:argType="rusha.x.Product" />
+            app:argType="rusha.x.product.Product" />
     </fragment>
     <fragment
         android:id="@+id/recipeDetailsFragment"
@@ -32,14 +32,14 @@
         android:label="RecipeDetailsFragment">
         <argument
             android:name="recipe"
-            app:argType="rusha.x.Recipe" />
+            app:argType="rusha.x.recipe.Recipe" />
         <action
             android:id="@+id/action_recipeDetailsFragment_to_productDetailsFragment"
             app:destination="@id/productDetailsFragment" />
     </fragment>
     <fragment
         android:id="@+id/basketFragment"
-        android:name="rusha.x.BasketFragment"
+        android:name="rusha.x.basket.BasketFragment"
         android:label="BasketFragment" >
         <action
             android:id="@+id/action_basketFragment_to_productDetailsFragment"

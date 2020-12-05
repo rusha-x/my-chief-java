@@ -1,4 +1,4 @@
-package rusha.x
+package rusha.x.recipe
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -9,58 +9,12 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.viewModelScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
-import io.ktor.client.HttpClient
-import io.ktor.client.request.get
 import kotlinx.android.synthetic.main.recipe_list_activity.*
 import kotlinx.android.synthetic.main.recipe_list_item.view.*
-import kotlinx.coroutines.launch
-import kotlinx.serialization.builtins.list
-import kotlinx.serialization.json.Json
 import org.kodein.di.instance
-
-class RecipeListViewModel : ViewModel() {
-    private val json by di.instance<Json>()
-    private val httpClient by di.instance<HttpClient>()
-
-    val recipesLiveData = MutableLiveData<List<Recipe>>(emptyList())
-    val isRefreshingLiveData = MutableLiveData<Boolean>()
-    val goToEditRecipe = SingleLiveEvent<Nothing>()
-    val goToRecipeDetails = SingleLiveEvent<Recipe>()
-
-    fun onRefresh() {
-        updateRecipes()
-    }
-
-    fun onResume() {
-        updateRecipes()
-    }
-
-    private fun updateRecipes() {
-        viewModelScope.launch {
-            isRefreshingLiveData.value = true
-            val recipesJson = httpClient.get<String>(
-                "http://207.254.71.167:9999/recipe/all"
-            )
-            val allRecipes = json.parse(
-                deserializer = Recipe.serializer().list,
-                string = recipesJson
-            )
-            recipesLiveData.value = allRecipes
-            isRefreshingLiveData.value = false
-        }
-    }
-
-    fun onAddRecipeClick() {
-        goToEditRecipe.call()
-    }
-
-    fun onRecipeClick(recipe: Recipe) {
-        goToRecipeDetails.value = recipe
-    }
-}
+import rusha.x.*
 
 class RecipeListFragment : Fragment(R.layout.recipe_list_activity) {
     private lateinit var viewModel: RecipeListViewModel
@@ -117,7 +71,7 @@ class RecipesListAdapter(
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
-    ): RecipesListAdapter.ViewHolder {
+    ): ViewHolder {
         val inflater = LayoutInflater.from(parent.context)
         val view = inflater.inflate(
             R.layout.recipe_list_item,
@@ -131,7 +85,7 @@ class RecipesListAdapter(
         return recipesToAdopt.size
     }
 
-    override fun onBindViewHolder(holder: RecipesListAdapter.ViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val recipeOnPosition = recipesToAdopt.get(index = position)
         holder.bind(recipe = recipeOnPosition)
     }

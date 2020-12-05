@@ -14,6 +14,8 @@ import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.recipe_details_activity.*
 import kotlinx.android.synthetic.main.recipe_details_item.view.*
+import rusha.x.product.Product
+import rusha.x.recipe.Recipe
 
 class RecipeDetailsViewModel : ViewModel() {
     val recipeNameLiveData = MutableLiveData<String>("")

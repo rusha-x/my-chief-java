@@ -1,15 +1,14 @@
-package rusha.x
+package rusha.x.recipe.createOrEdit
 
-import kotlinx.serialization.Serializable
+import com.google.gson.annotations.SerializedName
 
-@Serializable
+
 data class CreateOrEditRecipe(
-    val id: Int? = null,
-    val name: String,
-    val description: String,
-    val ingredients: List<Ingredient>
+    @SerializedName("id") val id: Int? = null,
+    @SerializedName("name") val name: String,
+    @SerializedName("description") val description: String,
+    @SerializedName("ingredients") val ingredients: List<Ingredient>
 ) {
-    @Serializable
     data class Ingredient(
         val countInRecipe: Double,
         val product: CreateOrEditProductByName
@@ -34,10 +33,10 @@ data class CreateOrEditRecipe(
     }
 }
 
-@Serializable
+
 data class CreateOrEditProductByName(
-    val id: Int? = null,
-    val name: String,
-    val price: Double,
-    val unit: String
+    @SerializedName("id") val id: Int? = null,
+    @SerializedName("name") val name: String,
+    @SerializedName("price") val price: Double,
+    @SerializedName("unit") val unit: String
 )
