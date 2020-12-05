@@ -1,15 +1,15 @@
 package rusha.x.recipe
 
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.schedulers.Schedulers
 import org.kodein.di.instance
+import rusha.x.BaseViewModel
 import rusha.x.MainApi
 import rusha.x.SingleLiveEvent
 import rusha.x.di
 
-class RecipeListViewModel : ViewModel() {
+class RecipeListViewModel : BaseViewModel() {
     private val api by di.instance<MainApi>()
 
     val recipesLiveData = MutableLiveData<List<Recipe>>(emptyList())
@@ -30,7 +30,7 @@ class RecipeListViewModel : ViewModel() {
         api.allRecipe()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe { allRecipes ->
+            .managedSubscribe { allRecipes ->
                 recipesLiveData.value = allRecipes
                 isRefreshingLiveData.value = false
             }

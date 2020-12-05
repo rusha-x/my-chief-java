@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -17,7 +16,7 @@ import kotlinx.android.synthetic.main.recipe_details_item.view.*
 import rusha.x.product.Product
 import rusha.x.recipe.Recipe
 
-class RecipeDetailsViewModel : ViewModel() {
+class RecipeDetailsViewModel : BaseViewModel() {
     val recipeNameLiveData = MutableLiveData<String>("")
     val ingredientsLiveData = MutableLiveData<List<Recipe.Ingredient>>()
     val goToProductDetails = SingleLiveEvent<Product>()
@@ -59,7 +58,8 @@ class RecipeDetailsFragment : Fragment(R.layout.recipe_details_activity) {
         viewModel.goToProductDetails.observe(viewLifecycleOwner, Observer { product ->
             findNavController().navigate(
                 RecipeDetailsFragmentDirections.actionRecipeDetailsFragmentToProductDetailsFragment(
-                    product)
+                    product
+                )
             )
         })
     }

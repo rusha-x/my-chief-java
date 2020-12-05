@@ -1,9 +1,9 @@
 package rusha.x.product
 
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
+import rusha.x.BaseViewModel
 
-class ProductDetailsViewModel : ViewModel() {
+class ProductDetailsViewModel : BaseViewModel() {
 
     val nameLiveData = MutableLiveData<String>("")
     val formattedPriceLiveData = MutableLiveData<String>("")

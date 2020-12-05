@@ -1,11 +1,11 @@
 package rusha.x.basket
 
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import rusha.x.product.Product
+import rusha.x.BaseViewModel
 import rusha.x.SingleLiveEvent
+import rusha.x.product.Product
 
-class BasketViewModel : ViewModel() {
+class BasketViewModel : BaseViewModel() {
     val basketItemsLiveData = MutableLiveData<List<Basket.Item>>(emptyList())
     val goToProductDetails = SingleLiveEvent<Product>()
 
