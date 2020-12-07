@@ -9,8 +9,6 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import kotlinx.android.synthetic.main.recipe_details_activity.*
 import rusha.x.R
-import rusha.x.RecipeDetailsFragmentArgs
-import rusha.x.RecipeDetailsFragmentDirections
 
 class RecipeDetailsFragment : Fragment(R.layout.recipe_details_activity) {
     private lateinit var viewModel: RecipeDetailsViewModel

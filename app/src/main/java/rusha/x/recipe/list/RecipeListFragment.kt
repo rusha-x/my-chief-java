@@ -13,7 +13,6 @@ import kotlinx.android.synthetic.main.recipe_list_activity.*
 import kotlinx.android.synthetic.main.recipe_list_item.view.*
 import rusha.x.R
 import rusha.x.recipe.Recipe
-import rusha.x.recipe.RecipeListFragmentDirections
 
 class RecipeListFragment : Fragment(R.layout.recipe_list_activity) {
     private lateinit var viewModel: RecipeListViewModel
