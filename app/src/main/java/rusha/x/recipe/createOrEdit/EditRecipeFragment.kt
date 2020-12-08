@@ -7,15 +7,19 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import kotlinx.android.synthetic.main.edit_recipe_fragment.*
+import rusha.x.MainActivity
 import rusha.x.R
+import rusha.x.di
+import javax.inject.Inject
 
 class EditRecipeFragment : Fragment(R.layout.edit_recipe_fragment) {
 
-    private lateinit var viewModel: EditRecipeViewModel
+    @Inject
+    lateinit var viewModel: EditRecipeViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        viewModel = ViewModelProvider(this).get(EditRecipeViewModel::class.java)
+        di().inject(this)
     }
 
     private lateinit var ingredientsViewAdapter: EditRecipeIngredientsAdapter

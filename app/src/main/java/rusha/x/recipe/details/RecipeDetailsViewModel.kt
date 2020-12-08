@@ -5,8 +5,9 @@ import rusha.x.BaseViewModel
 import rusha.x.SingleLiveEvent
 import rusha.x.product.Product
 import rusha.x.recipe.Recipe
+import javax.inject.Inject
 
-class RecipeDetailsViewModel : BaseViewModel() {
+class RecipeDetailsViewModel @Inject constructor() : BaseViewModel() {
     val recipeNameLiveData = MutableLiveData<String>("")
     val ingredientsLiveData = MutableLiveData<List<Recipe.Ingredient>>()
     val goToProductDetails = SingleLiveEvent<Product>()

@@ -1,12 +1,16 @@
 package rusha.x.recipe.createOrEdit
 
 import androidx.lifecycle.MutableLiveData
-import org.kodein.di.instance
-import rusha.x.*
+import rusha.x.BaseViewModel
+import rusha.x.MainApi
+import rusha.x.RxJavaSchedulers
+import rusha.x.SingleLiveEvent
+import javax.inject.Inject
 
-class EditRecipeViewModel : BaseViewModel() {
-    private val api by di.instance<MainApi>()
-    private val schedulers by di.instance<RxJavaSchedulers>()
+class EditRecipeViewModel @Inject constructor(
+    private val api: MainApi,
+    private val schedulers: RxJavaSchedulers
+) : BaseViewModel() {
 
     val ingredientsLiveData = MutableLiveData<List<CreateOrEditRecipe.Ingredient>>(emptyList())
     val recipeNameLiveData = MutableLiveData<String>("")

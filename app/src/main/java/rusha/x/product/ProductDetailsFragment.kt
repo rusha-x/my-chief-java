@@ -9,15 +9,18 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.navArgs
 import kotlinx.android.synthetic.main.product_details_fragment.*
 import rusha.x.R
+import rusha.x.di
+import javax.inject.Inject
 
 class ProductDetailsFragment : Fragment(R.layout.product_details_fragment) {
-    private lateinit var viewModel: ProductDetailsViewModel
+    @Inject
+    lateinit var viewModel: ProductDetailsViewModel
 
     private val args by navArgs<ProductDetailsFragmentArgs>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        viewModel = ViewModelProvider(this).get(ProductDetailsViewModel::class.java)
+        di().inject(this)
         viewModel.init(product = args.product)
     }
 

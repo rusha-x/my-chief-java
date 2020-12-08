@@ -8,11 +8,15 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import kotlinx.android.synthetic.main.basket_activity.*
 import rusha.x.R
+import rusha.x.di
+import javax.inject.Inject
 
 // класс BasketActivity наследует все свойства AppCompatActivity т.е все его переменные и функции
 // TODO для каждого BasketActivity, являющегося AppCompatActivity
 class BasketFragment : Fragment(R.layout.basket_activity) {
-    private lateinit var viewModel: BasketViewModel
+
+    @Inject
+    lateinit var viewModel: BasketViewModel
 
     // мы переопределяем onCreate, чтобы сделать доп. действия при создании активити
     // TODO определяем, что в отличие от других AppCompatActivity, BasketActivity onCreate
@@ -22,8 +26,7 @@ class BasketFragment : Fragment(R.layout.basket_activity) {
     ) {
         // TODO сначала делает onCreate как AppCompatActivity с savedInstanceState
         super.onCreate(savedInstanceState)
-        viewModel = ViewModelProvider(this).get(BasketViewModel::class.java)
-    }
+        di().inject(this)    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

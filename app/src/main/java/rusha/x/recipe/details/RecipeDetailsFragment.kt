@@ -9,15 +9,18 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import kotlinx.android.synthetic.main.recipe_details_activity.*
 import rusha.x.R
+import rusha.x.di
+import javax.inject.Inject
 
 class RecipeDetailsFragment : Fragment(R.layout.recipe_details_activity) {
-    private lateinit var viewModel: RecipeDetailsViewModel
+    @Inject
+    lateinit var viewModel: RecipeDetailsViewModel
 
     private val args by navArgs<RecipeDetailsFragmentArgs>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        viewModel = ViewModelProvider(this).get(RecipeDetailsViewModel::class.java)
+        di().inject(this)
         viewModel.init(recipe = args.recipe)
     }
 

@@ -1,13 +1,17 @@
 package rusha.x.recipe.list
 
 import androidx.lifecycle.MutableLiveData
-import org.kodein.di.instance
-import rusha.x.*
+import rusha.x.BaseViewModel
+import rusha.x.MainApi
+import rusha.x.RxJavaSchedulers
+import rusha.x.SingleLiveEvent
 import rusha.x.recipe.Recipe
+import javax.inject.Inject
 
-class RecipeListViewModel : BaseViewModel() {
-    private val api by di.instance<MainApi>()
-    private val schedulers by di.instance<RxJavaSchedulers>()
+class RecipeListViewModel @Inject constructor(
+    private val api: MainApi,
+    private val schedulers: RxJavaSchedulers
+) : BaseViewModel() {
 
     val recipesLiveData = MutableLiveData<List<Recipe>>(emptyList())
     val isRefreshingLiveData = MutableLiveData<Boolean>()

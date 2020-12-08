@@ -11,15 +11,19 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.recipe_list_activity.*
 import kotlinx.android.synthetic.main.recipe_list_item.view.*
+import rusha.x.MainActivity
 import rusha.x.R
+import rusha.x.di
 import rusha.x.recipe.Recipe
+import javax.inject.Inject
 
 class RecipeListFragment : Fragment(R.layout.recipe_list_activity) {
-    private lateinit var viewModel: RecipeListViewModel
+    @Inject
+    lateinit var viewModel: RecipeListViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        viewModel = ViewModelProvider(this).get(RecipeListViewModel::class.java)
+        di().inject(this)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
