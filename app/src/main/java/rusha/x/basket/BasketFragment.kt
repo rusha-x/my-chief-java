@@ -1,19 +1,21 @@
 package rusha.x.basket
 
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
-import kotlinx.android.synthetic.main.basket_activity.*
 import rusha.x.R
+import rusha.x.databinding.BasketActivityBinding
 import rusha.x.di
 import javax.inject.Inject
 
-// класс BasketActivity наследует все свойства AppCompatActivity т.е все его переменные и функции
+// класс BasketActivity наследует все свойства Fragment т.е все его переменные и функции
 // TODO для каждого BasketActivity, являющегося AppCompatActivity
-class BasketFragment : Fragment(R.layout.basket_activity) {
+class BasketFragment : Fragment() {
 
     @Inject
     lateinit var viewModel: BasketViewModel
@@ -27,6 +29,16 @@ class BasketFragment : Fragment(R.layout.basket_activity) {
         // TODO сначала делает onCreate как AppCompatActivity с savedInstanceState
         super.onCreate(savedInstanceState)
         di().inject(this)    }
+
+    private lateinit var binding: BasketActivityBinding
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        binding = BasketActivityBinding.inflate(inflater)
+        return binding.root
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -47,7 +59,7 @@ class BasketFragment : Fragment(R.layout.basket_activity) {
             //это переменная, в которой лежит описание того как отображаются ячейки списка
             //в переменную basketRecyclerView мы записываем тот адаптер который создали выше
             //TODO adapter basketRecyclerView тоже самое itemViewAdapter
-            basketRecyclerView.adapter = itemViewAdapter
+            binding.basketRecyclerView.adapter = itemViewAdapter
         })
 
         viewModel.goToProductDetails.observe(viewLifecycleOwner, Observer { product ->

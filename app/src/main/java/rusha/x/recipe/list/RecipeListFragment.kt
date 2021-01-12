@@ -6,18 +6,14 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.RecyclerView
-import kotlinx.android.synthetic.main.recipe_list_activity.*
-import kotlinx.android.synthetic.main.recipe_list_item.view.*
-import rusha.x.MainActivity
 import rusha.x.R
+import rusha.x.databinding.RecipeListActivityBinding
 import rusha.x.di
 import rusha.x.recipe.Recipe
 import javax.inject.Inject
 
-class RecipeListFragment : Fragment(R.layout.recipe_list_activity) {
+class RecipeListFragment : Fragment() {
     @Inject
     lateinit var viewModel: RecipeListViewModel
 
@@ -26,25 +22,35 @@ class RecipeListFragment : Fragment(R.layout.recipe_list_activity) {
         di().inject(this)
     }
 
+    private lateinit var binding: RecipeListActivityBinding
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        binding = RecipeListActivityBinding.inflate(inflater)
+        return binding.root
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        addRecipeButton.setOnClickListener {
+        binding.addRecipeButton.setOnClickListener {
             viewModel.onAddRecipeClick()
         }
 
-        swipeRefreshLayout.setOnRefreshListener {
+        binding.swipeRefreshLayout.setOnRefreshListener {
             viewModel.onRefresh()
         }
 
         viewModel.recipesLiveData.observe(viewLifecycleOwner, Observer { recipes ->
             val recipesViewAdapter = RecipesListAdapter(viewModel)
             recipesViewAdapter.recipesToAdopt = recipes
-            recipesView.adapter = recipesViewAdapter
+            binding.recipesView.adapter = recipesViewAdapter
         })
 
         viewModel.isRefreshingLiveData.observe(viewLifecycleOwner, Observer { isRefreshing ->
-            swipeRefreshLayout.isRefreshing = isRefreshing
+            binding.swipeRefreshLayout.isRefreshing = isRefreshing
         })
         viewModel.goToEditRecipe.observe(viewLifecycleOwner, Observer { goToEditRecipe ->
             findNavController().navigate(
@@ -61,46 +67,5 @@ class RecipeListFragment : Fragment(R.layout.recipe_list_activity) {
     override fun onResume() {
         super.onResume()
         viewModel.onResume()
-    }
-}
-
-
-class RecipesListAdapter(
-    private val viewModel: RecipeListViewModel
-) : RecyclerView.Adapter<RecipesListAdapter.ViewHolder>() {
-    var recipesToAdopt: List<Recipe> = listOf()
-
-    override fun onCreateViewHolder(
-        parent: ViewGroup,
-        viewType: Int
-    ): ViewHolder {
-        val inflater = LayoutInflater.from(parent.context)
-        val view = inflater.inflate(
-            R.layout.recipe_list_item,
-            parent,
-            false
-        )
-        return ViewHolder(cellView = view)
-    }
-
-    override fun getItemCount(): Int {
-        return recipesToAdopt.size
-    }
-
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val recipeOnPosition = recipesToAdopt.get(index = position)
-        holder.bind(recipe = recipeOnPosition)
-    }
-
-    inner class ViewHolder(
-        val cellView: View
-    ) : RecyclerView.ViewHolder(cellView) {
-
-        fun bind(recipe: Recipe) {
-            cellView.recipesItem.text = recipe.name
-            cellView.setOnClickListener {
-                viewModel.onRecipeClick(recipe)
-            }
-        }
     }
 }
