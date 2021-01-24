@@ -19,7 +19,7 @@ public class AppModule {
     @Provides
     public MainApi mainApi() {
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://192.168.0.13:9999")
+                .baseUrl("https://my-little-chief-server.herokuapp.com/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .addCallAdapterFactory(RxJava3CallAdapterFactory.create())
                 .build();
